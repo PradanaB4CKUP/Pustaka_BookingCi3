@@ -52,7 +52,9 @@ class Autentifikasi extends CI_Controller
                         'email' => $user['email'],
                         'role_id' => $user['role_id']
                     ];
+
                     $this->session->set_userdata($data);
+
                     if ($user['role_id'] == 1) {
                         redirect('admin');
                     } else {
@@ -78,6 +80,14 @@ class Autentifikasi extends CI_Controller
         }
     }
 
+    public function logout()
+    {
+        $this->session->unset_userdata('email');
+        $this->session->unset_userdata('role_id');
+
+        $this->session->set_flashdata('pesan', '<div class="alert alert-success alert-message" role="alert">Anda telah logout!!</div>');
+        redirect('autentifikasi');
+    }
     public function blok()
     {
         $this->load->view('autentifikasi/blok');
@@ -142,7 +152,7 @@ class Autentifikasi extends CI_Controller
                 'image' => 'default.jpg',
                 'password' => password_hash($this->input->post('password1'), PASSWORD_DEFAULT),
                 'role_id' => 2,
-                'is_active' => 0,
+                'is_active' => 1,
                 'tanggal_input' => time()
             ];
             $this->ModelUser->simpanData($data); //menggunakan model
