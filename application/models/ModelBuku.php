@@ -60,6 +60,11 @@ class ModelBuku extends CI_Model
         $this->db->delete('kategori', $data, $where);
     }
 
+    public function updateKategori($where = null, $data = null)
+    {
+        $this->db->update('kategori', $data, $where);
+    }
+
     //join
     public function joinKategoriBuku($where)
     {
