@@ -5,7 +5,7 @@ class ModelUser extends CI_Model
 {
     public function simpanData($data = null)
     {
-        $this->db->insert('user',$data);
+        $this->db->insert('user', $data);
     }
 
     public function cekData($where = null)
@@ -31,6 +31,14 @@ class ModelUser extends CI_Model
         $this->db->select('*');
         $this->db->from('user');
         $this->db->limit(10, 0);
+        return $this->db->get();
+    }
+
+    public function joinKategoriBuku($where)
+    {
+        $this->db->from('buku');
+        $this->db->join('kategori', 'kategori.id = buku.id_kategori');
+        $this->db->where($where);
         return $this->db->get();
     }
 }
