@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-
+date_default_timezone_set("Asia/Jakarta");
 /*
 | -------------------------------------------------------------------
 | AUTO-LOADER
@@ -89,7 +89,8 @@ $autoload['drivers'] = array();
 |
 |	$autoload['helper'] = array('url', 'file');
 */
-$autoload['helper'] = array('url', 'file', 'pustaka');
+// $autoload['helper'] = array('url', 'file', 'pustaka');
+$autoload['helper'] = array('url', 'pustaka', 'form');
 
 /*
 | -------------------------------------------------------------------
@@ -132,4 +133,4 @@ $autoload['language'] = array();
 |
 |	$autoload['model'] = array('first_model' => 'first');
 */
-$autoload['model'] = array('ModelUser', 'ModelBuku');
+$autoload['model'] = array('ModelUser', 'ModelBuku', 'ModelBooking');

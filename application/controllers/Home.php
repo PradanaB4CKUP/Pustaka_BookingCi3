@@ -4,12 +4,30 @@ class Home extends CI_Controller
     function __construct()
     {
         parent::__construct();
+        $this->load->model(['ModelBuku', 'ModelUser', 'ModelBooking']);
+        $this->load->library('pagination');
     }
     public function index()
     {
+        //configurasi pagination
+
+        $config['base_url'] = base_url('home');
+        $config['total_baris'] = $this->ModelBuku->bukuTotalRecord();
+        $config['per_page'] = 8;
+        $config['uri_segment'] = 3;
+        $this->pagination->initialize($config);
+
+        //menentukan offset record dari uri segment
+        $awal = $this->uri->segment(3, 0);
+        $baris = $this->ModelBuku->bukuLimit($config['per_page'], $awal)->result();
+
+
         $data = [
             'judul' => "Katalog Buku",
             'buku' => $this->ModelBuku->getBuku()->result(),
+            'baris' => $baris,
+            'pagination' => $this->pagination->create_links(),
+            'awal' => $awal
         ];
 
         if ($this->session->userdata('email')) {

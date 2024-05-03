@@ -5,6 +5,7 @@ class User extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->load->model(['ModelUser']);
         cek_login();
     }
     public function index()
@@ -21,14 +22,24 @@ class User extends CI_Controller
     {
         $data['judul'] = 'Data Anggota';
         $data['user'] = $this->ModelUser->cekData(['email' => $this->session->userdata('email')])->row_array();
-        $this->db->where('role_id', 1);
-        $data['anggota'] = $this->db->get('user')->result_array();
+        $this->db->where('role_id', 2);
+        $data['anggota'] = $this->ModelUser->getuserwhere($roleid)->result();
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
         $this->load->view('user/anggota', $data);
         $this->load->view('templates/footer');
     }
+
+    public function hapusAnggota()
+    {
+        $id = $this->uri->segment(3);
+        $this->ModelUser->hapusData(['id' => $id]);
+
+        $this->session->set_flashdata('pesan', '<div class="alert alert-success alert-message" role="alert">Data Anggota Berhasil dihapus </div>');
+        redirect(base_url('user/anggota'));
+    }
+
     public function ubahProfil()
     {
         $data['judul'] = 'Ubah Profil';

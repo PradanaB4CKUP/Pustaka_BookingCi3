@@ -1,12 +1,19 @@
 <?php
 class Autentifikasi extends CI_Controller
 {
+    public function __construct()
+    {
+        parent::__construct();
+        //cek_user();
+        $this->load->model(['ModelUser', 'ModelBooking', 'ModelBuku', 'ModelKategori']);
+    }
+
     public function index()
     {
         //jika statusnya sudah login, maka tidak bisa mengakses 
         //halaman login alias dikembalikan ke tampilan user
         if ($this->session->userdata('email')) {
-            redirect('user');
+            redirect('admin');
         }
         $this->form_validation->set_rules(
             'email',

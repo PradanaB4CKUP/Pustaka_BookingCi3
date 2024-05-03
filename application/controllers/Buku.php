@@ -6,6 +6,7 @@ class Buku extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->load->model(['ModelUser', 'ModelBuku']);
         cek_login();
     }
 
@@ -205,6 +206,7 @@ class Buku extends CI_Controller
             ];
 
             $this->ModelBuku->simpanKategori($data);
+            $this->session->set_flashdata('pesan', '<div class="alert alert-danger" role="alert">Kategori Berhasil ditambahkan </div>');
             redirect('buku/kategori');
         }
     }
@@ -242,6 +244,7 @@ class Buku extends CI_Controller
     {
         $where = ['id' => $this->uri->segment(3)];
         $this->ModelBuku->hapusKategori($where);
+        $this->session->set_flashdata('pesan', '<div class="alert alert-danger" role="alert">Kategori Berhasil dihapus </div>');
         redirect('buku/kategori');
     }
 }
